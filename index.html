@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animacions</title>
+    <script>
+        localStorage.setItem('salto', 0);
+    </script>
+    <style>
+        body {
+            background-image: url("fondo.jpg");
+            background-repeat: no-repeat, repeat;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="mario.png" id="Personaje" alt="Mario" style="width: 50px;top:251px;position:relative;" srcset="">
+    <script>
+        document.addEventListener('keydown', (event) => {
+            var posicion_base = 259;
+            var cronometro = 0;
+            var salto_in_progress = 0;
+            var elemento = document.getElementById('Personaje');
+            var posicion = elemento.getBoundingClientRect();
+            console.log("Top1", posicion.top)
+            let operacion = 0;
+            setInterval(function () {
+                cronometro++;
+            }, 1000);
+            switch (event.key) {
+                case "Up": // IE specific value
+                case "ArrowUp":
+                    if (localStorage.getItem('salto') == 1) {
+                        break
+                    }
+                    localStorage.setItem('salto', 1);
+                    var a = setInterval(function () {
+                        let elementoSalto1 = document.getElementById('Personaje');
+                        elementoSalto1.src = 'mario_move.png';
+                        let posicionSalto1 = elemento.getBoundingClientRect();
+                        operacion = Number(posicionSalto1.top) - 20;
+                        elementoSalto1.style.top = operacion + 'px';
+                    }, 50);
+                    setTimeout(function () {
+                        clearInterval(a);
+                        var b = setInterval(function () {
+                            let elementoSalto1 = document.getElementById('Personaje');
+                            elementoSalto1.src = 'mario_move.png';
+                            let posicionSalto1 = elemento.getBoundingClientRect();
+                            operacion = Number(posicionSalto1.top) + 17;
+                            console.log("top", operacion)
+                            if (operacion < posicion_base) {
+                                elementoSalto1.style.top = operacion + 'px';
+                            }
+                        }, 50);
+                        setTimeout(function () {
+                            clearInterval(b);
+                            let elementoSalto1 = document.getElementById('Personaje');
+                            elementoSalto1.src = 'mario.png';
+                            elementoSalto1.style.top = '253px';
+                            localStorage.setItem('salto', 0);
+                        }, 100)
+                    }, 200)
+                    break
+                case "Right": // IE specific value
+                case "ArrowRight":
+                    if (localStorage.getItem('salto') == 1) {
+                        break
+                    }
+                    elemento.style.transform = 'rotateY(0deg)';
+                    elemento.src = 'mario_move.png';
+                    operacion = Number(posicion.left) + 3
+                    console.log("para adelante", operacion);
+                    elemento.style.left = operacion + 'px';
+                    setTimeout(function () {
+                        var elemento1 = document.getElementById('Personaje');
+                        elemento1.src = 'mario.png';
+                    }, 100)
+                    break
+                case "Left": // IE specific value
+                case "ArrowLeft":
+                    if (localStorage.getItem('salto') == 1) {
+                        break
+                    }
+                    elemento.style.transform = 'rotateY(180deg)';
+                    elemento.src = 'mario_move.png';
+                    operacion = Number(posicion.left) - 20;
+                    console.log("para atrass", operacion);
+                    elemento.style.left = operacion + 'px';
+                    setTimeout(function () {
+                        var elemento1 = document.getElementById('Personaje');
+                        elemento1.src = 'mario.png';
+                    }, 100)
+                    break
+            }
+        });
+    </script>
+</body>
+
+</html>
