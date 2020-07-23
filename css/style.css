@@ -1,0 +1,27 @@
+body {
+    background-image: url("../FondoMario.png");
+    background-repeat: no-repeat, repeat;
+    background-size: 1440px 750px;
+}
+
+.modal-contenido {
+    background-color: rgb(231, 240, 240);
+    width: 400px;
+    height: 750px;
+    padding: 10px 20px;
+    position: relative;
+    left: -500px;
+    top:-90px;
+}
+@keyframes Mostrar {
+    0%   {left:-500px;}
+    100% {left:500px;}
+}
+@keyframes Ocultar {
+    0%   {left:500px;}
+    100% {left:-500px;}
+}
+
+.modal {
+    position: fixed;
+}

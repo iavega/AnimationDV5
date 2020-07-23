@@ -5,99 +5,297 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Animacions</title>
+    <link rel="stylesheet" href="css/style.css">
     <script>
-        localStorage.setItem('salto', 0);
-    </script>
-    <style>
-        body {
-            background-image: url("fondo.jpg");
-            background-repeat: no-repeat, repeat;
+        function closed() {
+            let id = localStorage.getItem('IdAnimation');
+            document.getElementById(id).style.animationName = "Ocultar";
+            document.getElementById(id).style.animationDuration = "2s";
+            setTimeout(function () {
+                let id = localStorage.getItem('IdAnimation');
+                document.getElementById(id).style.left = "-500px";
+                localStorage.setItem('IdAnimation', "");
+                localStorage.setItem('salto', 0);
+            }, 2000);
         }
-    </style>
+        function MostrarOtro(title) {
+            closed()
+            setTimeout(function () {
+                let id = "miModalLab" + title
+                localStorage.setItem('IdAnimation', id);
+                document.getElementById(id).style.animationName = "Mostrar";
+                document.getElementById(id).style.animationDuration = "2s";
+                setTimeout(function () {
+                    let id = localStorage.getItem('IdAnimation')
+                    document.getElementById(id).style.left = "500px";
+                }, 2000);
+            }, 2000);
+        }
+    </script>
 </head>
 
 <body>
-    <img src="mario.png" id="Personaje" alt="Mario" style="width: 50px;top:251px;position:relative;" srcset="">
-    <script>
-        document.addEventListener('keydown', (event) => {
-            var posicion_base = 259;
-            var cronometro = 0;
-            var salto_in_progress = 0;
-            var elemento = document.getElementById('Personaje');
-            var posicion = elemento.getBoundingClientRect();
-            console.log("Top1", posicion.top)
-            let operacion = 0;
-            setInterval(function () {
-                cronometro++;
-            }, 1000);
-            switch (event.key) {
-                case "Up": // IE specific value
-                case "ArrowUp":
-                    if (localStorage.getItem('salto') == 1) {
-                        break
-                    }
-                    localStorage.setItem('salto', 1);
-                    var a = setInterval(function () {
-                        let elementoSalto1 = document.getElementById('Personaje');
-                        elementoSalto1.src = 'mario_move.png';
-                        let posicionSalto1 = elemento.getBoundingClientRect();
-                        operacion = Number(posicionSalto1.top) - 20;
-                        elementoSalto1.style.top = operacion + 'px';
-                    }, 50);
-                    setTimeout(function () {
-                        clearInterval(a);
-                        var b = setInterval(function () {
-                            let elementoSalto1 = document.getElementById('Personaje');
-                            elementoSalto1.src = 'mario_move.png';
-                            let posicionSalto1 = elemento.getBoundingClientRect();
-                            operacion = Number(posicionSalto1.top) + 17;
-                            console.log("top", operacion)
-                            if (operacion < posicion_base) {
-                                elementoSalto1.style.top = operacion + 'px';
-                            }
-                        }, 50);
-                        setTimeout(function () {
-                            clearInterval(b);
-                            let elementoSalto1 = document.getElementById('Personaje');
-                            elementoSalto1.src = 'mario.png';
-                            elementoSalto1.style.top = '253px';
-                            localStorage.setItem('salto', 0);
-                        }, 100)
-                    }, 200)
-                    break
-                case "Right": // IE specific value
-                case "ArrowRight":
-                    if (localStorage.getItem('salto') == 1) {
-                        break
-                    }
-                    elemento.style.transform = 'rotateY(0deg)';
-                    elemento.src = 'mario_move.png';
-                    operacion = Number(posicion.left) + 3
-                    console.log("para adelante", operacion);
-                    elemento.style.left = operacion + 'px';
-                    setTimeout(function () {
-                        var elemento1 = document.getElementById('Personaje');
-                        elemento1.src = 'mario.png';
-                    }, 100)
-                    break
-                case "Left": // IE specific value
-                case "ArrowLeft":
-                    if (localStorage.getItem('salto') == 1) {
-                        break
-                    }
-                    elemento.style.transform = 'rotateY(180deg)';
-                    elemento.src = 'mario_move.png';
-                    operacion = Number(posicion.left) - 20;
-                    console.log("para atrass", operacion);
-                    elemento.style.left = operacion + 'px';
-                    setTimeout(function () {
-                        var elemento1 = document.getElementById('Personaje');
-                        elemento1.src = 'mario.png';
-                    }, 100)
-                    break
-            }
-        });
-    </script>
+    <!-- Imagen de Mario-->
+    <img src="mario.png" id="Personaje" alt="Mario" style="width: 79px;top:580px;position:relative;" srcset="">
+    <!-- Model Lab 1-->
+    <div id="miModalLab1" class="modal">
+        <div class="modal-contenido">
+            <a href="#" onclick="closed()" style="text-decoration: none;"><img src="img/cerrar.png" style="width: 20px;"
+                    alt="" srcset=""></a>
+            <div style=" position:relative;display: flex;align-items: center;">
+                <div style="width: 200px;">
+
+                </div>
+                <div style="width: 200px;text-align:right;">
+                    <a href="#" onclick="MostrarOtro(2)">
+                        Siguiente
+                        <img src="img/Flecha.png" style="width: 10px;" alt="" srcset="">
+                    </a>
+                </div>
+            </div>
+            <h2>Laboratorio 1</h2>
+            <h5>Texto en GIMP</h5>
+            <img src="img/Lab1-1.PNG" style="width: 300px;" alt="">
+            <img src="img/Lab1-2.PNG" alt="">
+            <img src="img/Lab1-3.PNG" alt="">
+        </div>
+    </div>
+    <!-- Model Lab 2-->
+    <div id="miModalLab2" class="modal">
+        <div class="modal-contenido">
+            <a href="#" onclick="closed()" style="text-decoration: none;"><img src="img/cerrar.png" style="width: 20px;"
+                    alt="" srcset=""></a>
+            <div style=" position:relative;display: flex;align-items: center;">
+                <div style="width: 200px;">
+                    <a href="#" onclick="MostrarOtro(1)">
+                        <img src="img/Flecha.png" style="width: 10px;transform: rotateY(180deg);" alt="" srcset="">
+                        Regresar
+                    </a>
+                </div>
+                <div style="width: 200px;text-align:right;">
+                    <a href="#" onclick="MostrarOtro(3)">
+                        Siguiente
+                        <img src="img/Flecha.png" style="width: 10px;" alt="" srcset="">
+                    </a>
+                </div>
+            </div>
+            <h2>Laboratorio 2</h2>
+            <p>Imagenes GIMP.</p>
+            <img src="img/Lab2-1.PNG" alt="">
+            <img src="img/Lab2-2.PNG" alt="">
+        </div>
+    </div>
+    <!-- Model Lab 3-->
+    <div id="miModalLab3" class="modal">
+        <div class="modal-contenido">
+            <a href="#" onclick="closed()" style="text-decoration: none;"><img src="img/cerrar.png" style="width: 20px;"
+                    alt="" srcset=""></a>
+            <div style=" position:relative;display: flex;align-items: center;">
+                <div style="width: 200px;">
+                    <a href="#" onclick="MostrarOtro(2)">
+                        <img src="img/Flecha.png" style="width: 10px;transform: rotateY(180deg);" alt="" srcset="">
+                        Regresar
+                    </a>
+                </div>
+                <div style="width: 200px;text-align:right;">
+                    <a href="#" onclick="MostrarOtro(4)">
+                        Siguiente
+                        <img src="img/Flecha.png" style="width: 10px;" alt="" srcset="">
+                    </a>
+                </div>
+            </div>
+            <h2>Laboratorio 3</h2>
+            <p>Imagenes Photoshop | Parte 1</p>
+            <img src="img/Lab3-1.PNG" style="width: 300px;" alt="">
+            <img src="img/Lab3-2.PNG" style="width: 300px;" alt="">
+        </div>
+    </div>
+    <!-- Model Lab 4-->
+    <div id="miModalLab4" class="modal">
+        <div class="modal-contenido">
+            <a href="#" onclick="closed()" style="text-decoration: none;"><img src="img/cerrar.png" style="width: 20px;"
+                    alt="" srcset=""></a>
+            <div style=" position:relative;display: flex;align-items: center;">
+                <div style="width: 200px;">
+                    <a href="#" onclick="MostrarOtro(3)">
+                        <img src="img/Flecha.png" style="width: 10px;transform: rotateY(180deg);" alt="" srcset="">
+                        Regresar
+                    </a>
+                </div>
+                <div style="width: 200px;text-align:right;">
+                    <a href="#" onclick="MostrarOtro(5)">
+                        Siguiente
+                        <img src="img/Flecha.png" style="width: 10px;" alt="" srcset="">
+                    </a>
+                </div>
+            </div>
+            <h2>Laboratorio 4</h2>
+            <p>Imagenes Photoshop | Parte 2</p>
+            <img src="img/Lab4-1.PNG" style="width: 150px;" alt="">
+            <img src="img/Lab4-2.PNG" style="width: 300px;" alt="">
+            <img src="img/Lab4-3.PNG" style="width: 300px;" alt="">
+        </div>
+    </div>
+    <!-- Model Lab 5-->
+    <div id="miModalLab5" class="modal">
+        <div class="modal-contenido">
+            <a href="#" onclick="closed()" style="text-decoration: none;"><img src="img/cerrar.png" style="width: 20px;"
+                    alt="" srcset=""></a>
+            <div style=" position:relative;display: flex;align-items: center;">
+                <div style="width: 200px;">
+                    <a href="#" onclick="MostrarOtro(4)">
+                        <img src="img/Flecha.png" style="width: 10px;transform: rotateY(180deg);" alt="" srcset="">
+                        Regresar
+                    </a>
+                </div>
+                <div style="width: 200px;text-align:right;">
+                    <a href="#" onclick="MostrarOtro(6)">
+                        Siguiente
+                        <img src="img/Flecha.png" style="width: 10px;" alt="" srcset="">
+                    </a>
+                </div>
+            </div>
+            <h2>Laboratorio 5</h2>
+            <p>Mejoras en la calidad del Audio</p>
+            <audio src="audio/Lab5-1.wav" preload="auto" controls></audio>
+            <audio src="audio/Lab5-2.wav" preload="auto" controls></audio>
+            <audio src="audio/Lab5-3.wav" preload="auto" controls></audio>
+        </div>
+    </div>
+    <!-- Model Lab 6-->
+    <div id="miModalLab6" class="modal">
+        <div class="modal-contenido">
+            <a href="#" onclick="closed()" style="text-decoration: none;"><img src="img/cerrar.png" style="width: 20px;"
+                    alt="" srcset=""></a>
+            <div style=" position:relative;display: flex;align-items: center;">
+                <div style="width: 200px;">
+                    <a href="#" onclick="MostrarOtro(5)">
+                        <img src="img/Flecha.png" style="width: 10px;transform: rotateY(180deg);" alt="" srcset="">
+                        Regresar
+                    </a>
+                </div>
+                <div style="width: 200px;text-align:right;">
+                    <a href="#" onclick="MostrarOtro(7)">
+                        Siguiente
+                        <img src="img/Flecha.png" style="width: 10px;" alt="" srcset="">
+                    </a>
+                </div>
+            </div>
+            <h2>Laboratorio 6</h2>
+            <p>Este es mi primera ventana modal sin utilizar JavaScript.</p>
+        </div>
+    </div>
+    <!-- Model Lab 7-->
+    <div id="miModalLab7" class="modal">
+        <div class="modal-contenido">
+            <a href="#" onclick="closed()" style="text-decoration: none;"><img src="img/cerrar.png" style="width: 20px;"
+                    alt="" srcset=""></a>
+            <div style=" position:relative;display: flex;align-items: center;">
+                <div style="width: 200px;">
+                    <a href="#" onclick="MostrarOtro(6)">
+                        <img src="img/Flecha.png" style="width: 10px;transform: rotateY(180deg);" alt="" srcset="">
+                        Regresar
+                    </a>
+                </div>
+                <div style="width: 200px;text-align:right;">
+                    <a href="#" onclick="MostrarOtro(8)">
+                        Siguiente
+                        <img src="img/Flecha.png" style="width: 10px;" alt="" srcset="">
+                    </a>
+                </div>
+            </div>
+            <h2>Laboratorio 7</h2>
+            <p>Este es mi primera ventana modal sin utilizar JavaScript.</p>
+        </div>
+    </div>
+    <!-- Model Lab 8-->
+    <div id="miModalLab8" class="modal">
+        <div class="modal-contenido">
+            <a href="#" onclick="closed()" style="text-decoration: none;"><img src="img/cerrar.png" style="width: 20px;"
+                    alt="" srcset=""></a>
+            <div style=" position:relative;display: flex;align-items: center;">
+                <div style="width: 200px;">
+                    <a href="#" onclick="MostrarOtro(7)">
+                        <img src="img/Flecha.png" style="width: 10px;transform: rotateY(180deg);" alt="" srcset="">
+                        Regresar
+                    </a>
+                </div>
+                <div style="width: 200px;text-align:right;">
+                    <a href="#" onclick="MostrarOtro(9)">
+                        Siguiente
+                        <img src="img/Flecha.png" style="width: 10px;" alt="" srcset="">
+                    </a>
+                </div>
+            </div>
+            <h2>Laboratorio 8</h2>
+            <p>Este es mi primera ventana modal sin utilizar JavaScript.</p>
+        </div>
+    </div>
+    <!-- Model Lab 9-->
+    <div id="miModalLab9" class="modal">
+        <div class="modal-contenido">
+            <a href="#" onclick="closed()" style="text-decoration: none;"><img src="img/cerrar.png" style="width: 20px;"
+                    alt="" srcset=""></a>
+            <div style=" position:relative;display: flex;align-items: center;">
+                <div style="width: 200px;">
+                    <a href="#" onclick="MostrarOtro(8)">
+                        <img src="img/Flecha.png" style="width: 10px;transform: rotateY(180deg);" alt="" srcset="">
+                        Regresar
+                    </a>
+                </div>
+                <div style="width: 200px;text-align:right;">
+                    <a href="#" onclick="MostrarOtro(10)">
+                        Siguiente
+                        <img src="img/Flecha.png" style="width: 10px;" alt="" srcset="">
+                    </a>
+                </div>
+            </div>
+            <h2>Laboratorio 9</h2>
+            <p>Este es mi primera ventana modal sin utilizar JavaScript.</p>
+        </div>
+    </div>
+    <!-- Model Lab 10-->
+    <div id="miModalLab10" class="modal">
+        <div class="modal-contenido">
+            <a href="#" onclick="closed()" style="text-decoration: none;"><img src="img/cerrar.png" style="width: 20px;"
+                    alt="" srcset=""></a>
+            <div style=" position:relative;display: flex;align-items: center;">
+                <div style="width: 200px;">
+                    <a href="#" onclick="MostrarOtro(9)">
+                        <img src="img/Flecha.png" style="width: 10px;transform: rotateY(180deg);" alt="" srcset="">
+                        Regresar
+                    </a>
+                </div>
+                <div style="width: 200px;text-align:right;">
+                    <a href="#" onclick="MostrarOtro(11)">
+                        Siguiente
+                        <img src="img/Flecha.png" style="width: 10px;" alt="" srcset="">
+                    </a>
+                </div>
+            </div>
+            <h2>Laboratorio 10</h2>
+            <p>Este es mi primera ventana modal sin utilizar JavaScript.</p>
+        </div>
+    </div>
+    <!-- Model Lab 11-->
+    <div id="miModalLab11" class="modal">
+        <div class="modal-contenido">
+            <a href="#" onclick="closed()" style="text-decoration: none;"><img src="img/cerrar.png" style="width: 20px;"
+                    alt="" srcset=""></a>
+            <div style=" position:relative;display: flex;align-items: center;">
+                <div style="width: 200px;">
+                    <a href="#" onclick="MostrarOtro(10)">
+                        <img src="img/Flecha.png" style="width: 10px;transform: rotateY(180deg);" alt="" srcset="">
+                        Regresar
+                    </a>
+                </div>
+            </div>
+            <h2>Laboratorio 11</h2>
+            <p>Este es mi primera ventana modal sin utilizar JavaScript.</p>
+        </div>
+    </div>
+    <script src="js/Movimientos.js"></script>
+    <script src="js/Funcionalidad.js"></script>
 </body>
 
 </html>
